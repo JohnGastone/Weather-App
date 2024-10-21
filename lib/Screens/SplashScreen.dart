@@ -1,16 +1,30 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:weatherapp/Screens/HomeScreen.dart';
+import 'package:weatherapp/widgets/wavepainter.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Timer(Duration(seconds: 5), () {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,25 +42,28 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Stack(
           children: [
             Positioned(
-              left: 20,
-              top: 100,
+              left: 100,
+              top: 350,
               child: Row(
                 children: [
                   Text(
                     "Hewa",
                     style: GoogleFonts.poppins(
                       color: Colors.white,
-                      fontSize: 40,
+                      fontSize: 50,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                   SizedBox(width: 10),
-                  Container(
-                    width: 15,
-                    height: 15,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color.fromARGB(255, 255, 178, 0),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12.0),
+                    child: Container(
+                      width: 15,
+                      height: 15,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color.fromARGB(255, 255, 178, 0),
+                      ),
                     ),
                   ),
                 ],
@@ -67,42 +84,4 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
     );
   }
-}
-
-class WavePainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Color.fromARGB(255, 34, 135, 212)
-      ..style = PaintingStyle.fill;
-
-    final path = Path();
-
-    // Define the wave height (adjust this value to control wave size)
-    const waveHeight = 100.0;
-
-    // Calculate the starting y-position to center the wave
-    final startY = (size.height - waveHeight) / 2 + waveHeight * 0.8;
-
-    path.moveTo(0, startY);
-    path.quadraticBezierTo(
-      size.width * 0.25,
-      startY - waveHeight * 0.5,
-      size.width * 0.5,
-      startY,
-    );
-    path.quadraticBezierTo(
-      size.width * 0.75,
-      startY + waveHeight * 0.4,
-      size.width,
-      startY,
-    );
-    path.lineTo(size.width, size.height);
-    path.lineTo(0, size.height);
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
