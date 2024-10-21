@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
 class WavePainter extends CustomPainter {
+  final Widget? child;
+
+  WavePainter({this.child});
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Color.fromARGB(255, 34, 135, 212)
+      ..color = const Color.fromARGB(255, 34, 135, 212)
       ..style = PaintingStyle.fill;
 
     final path = Path();
